@@ -89,6 +89,16 @@ resource "aws_iam_role_policy" "tf_codepipeline_cd_role" {
       "Resource": [
         "arn:aws:ssm:ap-southeast-2:277618971297:parameter/github/tf_codepipeline_cd/*"
       ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "codebuild:*",
+        "codepipeline:*"
+      ],
+      "Resource": [
+        "*"
+      ]
     }
   ]
 }
