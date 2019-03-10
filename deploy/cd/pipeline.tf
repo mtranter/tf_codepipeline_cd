@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "tf_aws_cd_pipeline" {
-  bucket = "tf_aws_cd_pipeline"
+  bucket = "tf-aws-cd-pipeline"
   acl    = "private"
 }
 
@@ -33,9 +33,7 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
     {
       "Effect":"Allow",
       "Action": [
-        "s3:GetObject",
-        "s3:GetObjectVersion",
-        "s3:GetBucketVersioning"
+        "s3:*"
       ],
       "Resource": [
         "${aws_s3_bucket.tf_aws_cd_pipeline.arn}",
@@ -79,6 +77,8 @@ resource "aws_codepipeline" "tf_aws_cd_pipeline" {
         Owner  = "mtranter"
         Repo   = "tf_codepipeline_cd"
         Branch = "master"
+        PollForSourceChanges = "true"
+        OAuthToken = "edd5cf570735ee15abb5eb4372d62fe044ac5c17"
       }
     }
   }

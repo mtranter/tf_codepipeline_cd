@@ -2,10 +2,24 @@ version: 0.1
 phases:
   install:
     commands:
-      - yum -y install jq
-      - curl 169.254.170.2$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI | jq 'to_entries | [ .[] | select(.key | (contains("Expiration") or contains("RoleArn"))  | not) ] |  map(if .key == "AccessKeyId" then . + {"key":"AWS_ACCESS_KEY_ID"} else . end) | map(if .key == "SecretAccessKey" then . + {"key":"AWS_SECRET_ACCESS_KEY"} else . end) | map(if .key == "Token" then . + {"key":"AWS_SESSION_TOKEN"} else . end) | map("export \(.key)=\(.value)") | .[]' -r > /tmp/aws_cred_export.txt # work around https://github.com/hashicorp/terraform/issues/8746
-      - cd /tmp && curl -o terraform.zip https://releases.hashicorp.com/terraform/${TerraformVersion}/terraform_${TerraformVersion}_linux_amd64.zip && echo "${TerraformSha256} terraform.zip" | sha256sum -c --quiet && unzip terraform.zip && mv terraform /usr/bin
+      - export TERRAFORM_VERSION=0.11.8
+      - export TERRAGRUNT_VERSION=v0.14.11
+      - wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip ./; \
+unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /bin; \
+rm -f terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+      - wget https://github.com/gruntwork-io/terragrunt/releases/download/${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 /bin/terragrunt ./ \
+chmod +x /bin/terragrunt
+      - curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+      - sudo apt-get install -y nodejs 
   build:
     commands:
-      - source /tmp/aws_cred_export.txt && terraform remote config -backend=s3 -backend-config="bucket=${TerraformStateBucket}" -backend-config="key=terraform.tfstate"
-      - source /tmp/aws_cred_export.txt && terraform apply
+      - pushd ./app
+      - npm test
+      - popd
+  build:
+    commands:
+      - cd ./deploy
+      - pushd ./cd
+      - terragrunt apply
+      - popd; pushd ./app
+      - terragrunt apply

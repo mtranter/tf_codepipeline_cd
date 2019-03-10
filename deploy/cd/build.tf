@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "tf_aws_cd" {
-  bucket = "tf_aws_cd_build"
+  bucket = "tf-aws-cd-build"
   acl    = "private"
 }
 
@@ -56,7 +56,8 @@ resource "aws_iam_role_policy" "tf_codepipeline_cd_role" {
       ],
       "Resource": [
         "${aws_s3_bucket.tf_aws_cd.arn}",
-        "${aws_s3_bucket.tf_aws_cd.arn}/*"
+        "${aws_s3_bucket.tf_aws_cd.arn}/*",
+        "${aws_s3_bucket.tf_aws_cd_pipeline.arn}/*"
       ]
     }
   ]
@@ -86,8 +87,6 @@ resource "aws_codebuild_project" "tf_codepipeline_cd_build" {
   }
 
   source {
-    type            = "GITHUB"
-    location        = "https://github.com/mtranter/tf_codepipeline_cd.git"
-    git_clone_depth = 1
+    type            = "CODEPIPELINE"
   }
 }
