@@ -45,7 +45,7 @@ resource "aws_iam_role_policy" "tf_codepipeline_cd_role" {
       "Action": [
         "apigateway:*",
         "lambda:*",
-        "iam:CreateRole"
+        "iam:*"
       ],
       "Resource": "*"
     },
@@ -70,6 +70,24 @@ resource "aws_iam_role_policy" "tf_codepipeline_cd_role" {
       ],
       "Resource": [
         "arn:aws:dynamodb:ap-southeast-2:277618971297:table/tf-codepipeline-cd-demo-terraform-state-lock"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iam:*"
+      ],
+      "Resource": [
+        "*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ssm:GetParameter"
+      ],
+      "Resource": [
+        "arn:aws:ssm:ap-southeast-2:277618971297:parameter/github/tf_codepipeline_cd/*"
       ]
     }
   ]
