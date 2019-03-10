@@ -77,7 +77,7 @@ resource "aws_codepipeline" "tf_aws_cd_pipeline" {
         Owner  = "mtranter"
         Repo   = "tf_codepipeline_cd"
         Branch = "master"
-        PollForSourceChanges = "true"
+        PollForSourceChanges = "false"
         OAuthToken = "2501522b2f950be30a01da4a395e0cfaa163a1c3"
       }
     }
@@ -99,4 +99,24 @@ resource "aws_codepipeline" "tf_aws_cd_pipeline" {
       }
     }
   }
+}
+
+resource "aws_codepipeline_webhook" "github_webhook" {
+  name            = "tf-aws-cd-pipeline-github"
+  authentication  = "GITHUB_HMAC"
+  target_action   = "Source"
+  target_pipeline = "${aws_codepipeline.tf_aws_cd_pipeline.name}"
+
+  authentication_configuration {
+    secret_token = "some-webhook-secret"
+  }
+
+  filter {
+    json_path    = "$.ref"
+    match_equals = "refs/heads/{Branch}"
+  }
+}
+
+output "webhooks_url" {
+    value = "${aws_codepipeline_webhook.github_webhook.url}"
 }
