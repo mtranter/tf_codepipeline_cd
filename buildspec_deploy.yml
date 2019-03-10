@@ -12,5 +12,5 @@ phases:
       - chmod +x /bin/terragrunt
   build:
     commands:
-      - cd ./deploy/cd && terragrunt apply --terragrunt-non-interactive -auto-approve
-      - cd ./deploy/app && terragrunt apply --terragrunt-non-interactive -auto-approve
+      - cd ./deploy/cd && terragrunt apply -auto-approve --terragrunt-non-interactive
+      - cd ./deploy/app && terragrunt apply -auto-approve --terragrunt-non-interactive
