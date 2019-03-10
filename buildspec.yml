@@ -14,7 +14,7 @@ phases:
       - pushd ./app
       - npm test
       - popd
-  build:
+  deploy:
     commands:
       - cd ./deploy/cd
       - terragrunt apply
