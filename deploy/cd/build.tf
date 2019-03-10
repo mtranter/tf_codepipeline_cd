@@ -62,6 +62,15 @@ resource "aws_iam_role_policy" "tf_codepipeline_cd_role" {
         "${aws_s3_bucket.tf_aws_cd_pipeline.arn}",
         "${aws_s3_bucket.tf_aws_cd_pipeline.arn}/*"
       ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:*"
+      ],
+      "Resource": [
+        "arn:aws:dynamodb:ap-southeast-2:277618971297:table/tf-codepipeline-cd-demo-terraform-state-lock"
+      ]
     }
   ]
 }
