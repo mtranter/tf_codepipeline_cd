@@ -5,7 +5,7 @@ phases:
       - wget https://releases.hashicorp.com/terraform/0.11.8/terraform_0.11.8_linux_amd64.zip
       - unzip terraform_0.11.8_linux_amd64.zip -d /bin
       - rm -f terraform_0.11.8_linux_amd64.zip
-      - wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.14.11/terragrunt_linux_amd64 /bin/terragrunt
+      - wget -P /bin/terragrunt https://github.com/gruntwork-io/terragrunt/releases/download/v0.14.11/terragrunt_linux_amd64
       - chmod +x /bin/terragrunt
       - curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
       - sudo apt-get install -y nodejs 
