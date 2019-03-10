@@ -16,8 +16,7 @@ phases:
       - popd
   build:
     commands:
-      - cd ./deploy
-      - pushd ./cd
+      - cd ./deploy/cd
       - terragrunt apply
-      - popd; pushd ./app
+      - cd ./../app
       - terragrunt apply
