@@ -98,11 +98,28 @@ resource "aws_codepipeline" "tf_aws_cd_pipeline" {
       category        = "Build"
       owner           = "AWS"
       provider        = "CodeBuild"
-      input_artifacts = ["source"]
+      input_artifacts = ["test"]
       version         = "1"
 
       configuration = {
         ProjectName = "${aws_codebuild_project.tf_codepipeline_cd_build.name}"
+      }
+    }
+  }
+
+  stage {
+    name = "Deploy"
+
+    action {
+      name            = "Deploy"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      input_artifacts = ["test"]
+      version         = "1"
+
+      configuration = {
+        ProjectName = "${aws_codebuild_project.tf_codepipeline_cd_deploy.name}"
       }
     }
   }
