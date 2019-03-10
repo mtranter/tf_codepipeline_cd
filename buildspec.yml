@@ -4,11 +4,11 @@ phases:
     commands:
       - export TERRAFORM_VERSION=0.11.8
       - export TERRAGRUNT_VERSION=v0.14.11
-      - wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip ./; \
-unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /bin; \
-rm -f terraform_${TERRAFORM_VERSION}_linux_amd64.zip
-      - wget https://github.com/gruntwork-io/terragrunt/releases/download/${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 /bin/terragrunt ./ \
-chmod +x /bin/terragrunt
+      - wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+      - unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /bin
+      - rm -f terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+      - wget https://github.com/gruntwork-io/terragrunt/releases/download/${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 /bin/terragrunt
+      - chmod +x /bin/terragrunt
       - curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
       - sudo apt-get install -y nodejs 
   build:

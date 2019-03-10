@@ -78,7 +78,7 @@ resource "aws_codepipeline" "tf_aws_cd_pipeline" {
         Repo   = "tf_codepipeline_cd"
         Branch = "master"
         PollForSourceChanges = "true"
-        OAuthToken = "edd5cf570735ee15abb5eb4372d62fe044ac5c17"
+        OAuthToken = "2501522b2f950be30a01da4a395e0cfaa163a1c3"
       }
     }
   }
