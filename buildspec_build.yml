@@ -3,3 +3,6 @@ phases:
   build:
     commands:
       - cd ./app && npm install && npm test
+artifacts:
+  files:
+    - '**/*'
