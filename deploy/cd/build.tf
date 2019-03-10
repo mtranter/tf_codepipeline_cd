@@ -55,6 +55,8 @@ resource "aws_iam_role_policy" "tf_codepipeline_cd_role" {
         "s3:*"
       ],
       "Resource": [
+        "arn:aws:s3:::/tf-codepipeline-cd-demo",
+        "arn:aws:s3:::/tf-codepipeline-cd-demo/*",
         "${aws_s3_bucket.tf_aws_cd.arn}",
         "${aws_s3_bucket.tf_aws_cd.arn}/*",
         "${aws_s3_bucket.tf_aws_cd_pipeline.arn}",

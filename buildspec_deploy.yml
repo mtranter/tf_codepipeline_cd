@@ -9,5 +9,5 @@ phases:
       - chmod +x /bin/terragrunt
   build:
     commands:
-      - cd ./deploy/cd && terragrunt apply
-      - cd ./deploy/app && terragrunt apply
+      - cd ./deploy/cd && terragrunt apply --terragrunt-non-interactive
+      - cd ./deploy/app && terragrunt apply --terragrunt-non-interactive
