@@ -13,4 +13,4 @@ phases:
   build:
     commands:
       - cd ./deploy/cd && terragrunt apply -auto-approve --terragrunt-non-interactive
-      - cd ./deploy/app && terragrunt apply -auto-approve --terragrunt-non-interactive
+      - cd ./../app && terragrunt apply -auto-approve --terragrunt-non-interactive
