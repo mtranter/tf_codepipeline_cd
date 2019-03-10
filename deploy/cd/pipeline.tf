@@ -98,7 +98,8 @@ resource "aws_codepipeline" "tf_aws_cd_pipeline" {
       category        = "Build"
       owner           = "AWS"
       provider        = "CodeBuild"
-      input_artifacts = ["test"]
+      output_artifacts = ["test"]
+      input_artifacts = ["source"]
       version         = "1"
 
       configuration = {

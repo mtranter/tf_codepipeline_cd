@@ -65,31 +65,7 @@ resource "aws_iam_role_policy" "tf_codepipeline_cd_role" {
 POLICY
 }
 
-resource "aws_codebuild_project" "tf_codepipeline_cd_build" {
-  name          = "tf_codepipeline_cd_build"
-  description   = "tf_codepipeline_cd_build"
-  build_timeout = "10"
-  service_role  = "${aws_iam_role.tf_aws_cd.arn}"
 
-  artifacts {
-    type = "CODEPIPELINE"
-  }
-
-  cache {
-    type     = "S3"
-    location = "${aws_s3_bucket.tf_aws_cd.bucket}"
-  }
-
-  environment {
-    compute_type = "BUILD_GENERAL1_SMALL"
-    image        = "aws/codebuild/golang:1.11"
-    type         = "LINUX_CONTAINER"
-  }
-
-  source {
-    type            = "CODEPIPELINE"
-  }
-}
 resource "aws_codebuild_project" "tf_codepipeline_cd_deploy" {
   name          = "tf_codepipeline_cd_deploy"
   description   = "tf_codepipeline_cd_deploy"
