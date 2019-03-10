@@ -53,6 +53,13 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
 EOF
 }
 
+data "aws_ssm_parameter" "webhooks_secret" {
+    name = "/github/tf_codepipeline_cd/webhooks/secret"
+}
+
+data "aws_ssm_parameter" "github_secret" {
+    name = "/github/tf_codepipeline_cd/secret"
+}
 resource "aws_codepipeline" "tf_aws_cd_pipeline" {
   name     = "tf-aws-cd-pipeline"
   role_arn = "${aws_iam_role.tf_aws_cd_pipeline.arn}"
@@ -78,7 +85,7 @@ resource "aws_codepipeline" "tf_aws_cd_pipeline" {
         Repo   = "tf_codepipeline_cd"
         Branch = "master"
         PollForSourceChanges = "false"
-        OAuthToken = "2501522b2f950be30a01da4a395e0cfaa163a1c3"
+        OAuthToken = "${data.aws_ssm_parameter.github_secret.value}"
       }
     }
   }
@@ -108,7 +115,7 @@ resource "aws_codepipeline_webhook" "github_webhook" {
   target_pipeline = "${aws_codepipeline.tf_aws_cd_pipeline.name}"
 
   authentication_configuration {
-    secret_token = "some-webhook-secret"
+    secret_token = "${data.aws_ssm_parameter.webhooks_secret.value}"
   }
 
   filter {
