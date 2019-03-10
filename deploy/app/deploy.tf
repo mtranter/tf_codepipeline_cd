@@ -8,7 +8,7 @@ variable "region" {
 
 data "archive_file" "lambda" {
   type        = "zip"
-  source_dir  = "./../app"
+  source_dir  = "./../../app"
   output_path = "${var.source_file}"
 }
 
