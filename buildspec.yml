@@ -11,10 +11,6 @@ phases:
       - sudo apt-get install -y nodejs 
   build:
     commands:
-      - cd ./app
-      - npm test
-      - popd
-      - cd ./deploy/cd
-      - terragrunt apply
-      - cd ./../app
-      - terragrunt apply
+      - cd ./app && npm test
+      - cd ./deploy/cd && terragrunt apply
+      - cd ./deploy/app && terragrunt apply
